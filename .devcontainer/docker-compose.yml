@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  turtle-api:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace
+    ports:
+      - "8000:8000"      # FastAPI
+      - "8888:8888"      # Jupyter
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    command: sleep infinity 
